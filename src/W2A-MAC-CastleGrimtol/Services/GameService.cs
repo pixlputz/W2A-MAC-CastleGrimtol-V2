@@ -11,7 +11,7 @@ namespace W2A_MAC_CastleGrimtol.Services
 {
 
     //2018-05-15: Update: Working to Revamp Service class to consolidate original method logic...
-    //Accomplished a lot, but still have areas that could be improved.
+    //Accomplished a lot, but still have areas that could be improved (have not yet rebuilt each page's drawing process).
 
     public class GameService
     {

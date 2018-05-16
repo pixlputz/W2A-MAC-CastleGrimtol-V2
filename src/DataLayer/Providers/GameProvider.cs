@@ -47,14 +47,14 @@ namespace DataLayer.Providers
             return _db.currentRoom;
         }
 
-        //2018-05-15: Updated/Consolidated logic to use this single method now (was split out for each room):
+        //2018-05-15: Updated New method:
         public Room GetPreviousRoom()
         {
             return _db.previousRoom;
         }
 
         //2018-05-15: Update: New Method built to change the current-room game state, as user progresses:
-        //Note: Also now using a new Game property 'CurrentRoom' to track.
+        //Note: Also now using a new Game property 'CurrentRoom' and 'NextRoom' to track.
         public void ChangeCurrentRoom()
         {
             switch (_db.currentRoom.Id)
@@ -168,62 +168,31 @@ namespace DataLayer.Providers
         //2018-05-15: Update: New Method built to replace 4 (originally, a specific version for each room item):
         public void CompleteRoomItem()
         {
-            switch (_db.currentRoom.Id)
-            {
-                case 1:
-                    _db.itemInProcessingForm.Completed = true;
-                    break;
-                case 2:
-                    _db.itemPolicyAgreementPackage.Completed = true;
-                    break;
-                case 3:
-                    _db.itemBuildingFob.Completed = true;
-                    break;
-                case 4:
-                    _db.itemActiveDirectoryAccount.Completed = true;
-                    break;
-            }
+            //2018-05-15: Update: New logic, replacing original switch bock with 1 line of code:
+            _db.currentRoom.Item.Completed = true;
         }
 
         //2018-05-15: Update: New Method built to replace 4 (originally, a specific version for each room item):
         public void SubmitRoomItem(bool leavingBuilding)
         {
             bool bolLeavingBuilding = false;
-            switch (_db.currentRoom.Id)
-            {
-                case 1:
-                    //No item to submit until next room.
-                    break;
-                case 2:
-                    _db.itemInProcessingForm.Submitted = true;
-                    break;
-                case 3:
-                    _db.itemPolicyAgreementPackage.Submitted = true;
-                    break;
-                case 4:
-                    if (bolLeavingBuilding)
-                    {
-                        _db.itemActiveDirectoryAccount.Submitted = true;
-                    }
-                    else
-                    {
-                        _db.itemBuildingFob.Submitted = true;
-                    }
-                    break;
-            }
+
+            //2018-05-15: Update: New logic, replacing original switch bock with 1 line of code:
+            _db.previousRoom.Item.Submitted = true;
+            if (bolLeavingBuilding) { _db.currentRoom.Item.Submitted = true; }
         }
 
         //2018-05-15: Update: New Method built to replace 4 (originally, a specific version for each room):
         public void SetRoomPersonMood(string mood)
         {
-            //We actually want to set the mood of the next room (not current room), based on actions in this room:
+            //We actually want to set the mood of the current room (room just changed), based on actions in previous room:
             if (mood == "Good")
             {
-                _db.previousRoom.Person.Mood = Person.MoodStatus.Good;
+                _db.currentRoom.Person.Mood = Person.MoodStatus.Good;
             }
             else
             {
-                _db.previousRoom.Person.Mood = Person.MoodStatus.Bad;
+                _db.currentRoom.Person.Mood = Person.MoodStatus.Bad;
             }
         }
 
