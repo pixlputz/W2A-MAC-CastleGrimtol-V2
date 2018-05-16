@@ -86,19 +86,81 @@ namespace DataLayer.Providers
         //2018-05-15: Update: New Method built to replace 4 (originally, a specific version for each room item):
         public void AddRoomItemToInventory()
         {
+            bool bolAlreadyExists = false;
             switch (_db.currentRoom.Id)
             {
+                //2018-05-15: Update: Adding logic to keep user from adding more than once:
                 case 1:
-                    _db.player.Inventory.Add(_db.itemInProcessingForm);
+                    foreach (var i in _db.player.Inventory)
+                    {
+                        if (i.Id == _db.currentRoom.Id)
+                        {
+                            //Already Exists; don't add again.
+                            bolAlreadyExists = true;
+                        }
+                    }
+                    if (bolAlreadyExists)
+                    {
+                        //Already Exists; don't add again.
+                    }
+                    else
+                    {
+                        _db.player.Inventory.Add(_db.itemInProcessingForm);
+                    }
                     break;
                 case 2:
-                    _db.player.Inventory.Add(_db.itemPolicyAgreementPackage);
+                    foreach (var i in _db.player.Inventory)
+                    {
+                        if (i.Id == _db.currentRoom.Id)
+                        {
+                            //Already Exists; don't add again.
+                            bolAlreadyExists = true;
+                        }
+                    }
+                    if (bolAlreadyExists)
+                    {
+                        //Already Exists; don't add again.
+                    }
+                    else
+                    {
+                        _db.player.Inventory.Add(_db.itemPolicyAgreementPackage);
+                    }
                     break;
                 case 3:
-                    _db.player.Inventory.Add(_db.itemBuildingFob);
+                    foreach (var i in _db.player.Inventory)
+                    {
+                        if (i.Id == _db.currentRoom.Id)
+                        {
+                            //Already Exists; don't add again.
+                            bolAlreadyExists = true;
+                        }
+                    }
+                    if (bolAlreadyExists)
+                    {
+                        //Already Exists; don't add again.
+                    }
+                    else
+                    {
+                        _db.player.Inventory.Add(_db.itemBuildingFob);
+                    }
                     break;
                 case 4:
-                    _db.player.Inventory.Add(_db.itemActiveDirectoryAccount);
+                    foreach (var i in _db.player.Inventory)
+                    {
+                        if (i.Id == _db.currentRoom.Id)
+                        {
+                            //Already Exists; don't add again.
+                            bolAlreadyExists = true;
+                        }
+                    }
+                    if (bolAlreadyExists)
+                    {
+                        //Already Exists; don't add again.
+                    }
+                    else
+                    {
+                        _db.player.Inventory.Add(_db.itemActiveDirectoryAccount);
+                    }
                     break;
             }
         }
